@@ -76,16 +76,13 @@ cp .env.example .env
 
 ## Installation & Setup
 
-### Prerequisites
+Choose **one** of the two package management methods below.
 
-- **Python 3.10+** (Tested on Python 3.13)
-- **Pipenv** or standard **pip** + **venv**
+### Method A: Using Pipenv (Primary & Recommended)
 
----
+> **Note**: `pipenv` automatically creates the virtual environment and installs all dependencies and pinned versions directly from [`Pipfile`](file:///c:/Users/fenny/Deployer/Automation/Pipfile) and `Pipfile.lock` (no `requirements.txt` needed).
 
-### Method A: Using Pipenv (Recommended)
-
-1. **Install dependencies**:
+1. **Install dependencies from `Pipfile`**:
    ```bash
    pipenv install --dev
    ```
@@ -103,9 +100,11 @@ cp .env.example .env
 
 ---
 
-### Method B: Using Standard Python Virtual Environment
+### Method B: Using Standard `pip` + `venv` (Alternative Fallback)
 
-1. **Create and activate virtual environment**:
+> If you do not use Pipenv, you can use Python's built-in `venv` with [`requirements.txt`](file:///c:/Users/fenny/Deployer/Automation/requirements.txt).
+
+1. **Create and activate a virtual environment**:
    - **Windows**:
      ```powershell
      python -m venv .venv
@@ -117,7 +116,7 @@ cp .env.example .env
      source .venv/bin/activate
      ```
 
-2. **Install required packages**:
+2. **Install packages from `requirements.txt`**:
    ```bash
    pip install -r requirements.txt
    ```
