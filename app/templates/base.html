@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Automation & Flask API Dashboard">
+    <title>{{ title }} - Automation Hub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="/" class="brand-logo" id="brandLogo">
+                <div class="logo-icon">
+                    <i data-lucide="zap"></i>
+                </div>
+                <span class="logo-text">Automation<span>Hub</span></span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}" id="navHome">
+                    <i data-lucide="layout-dashboard"></i> Dashboard
+                </a>
+                <a href="/about" class="nav-link {% if request.path == '/about' %}active{% endif %}" id="navAbout">
+                    <i data-lucide="book-open"></i> About & Docs
+                </a>
+                <a href="/api/health" target="_blank" class="nav-link" id="navApiHealth">
+                    <i data-lucide="activity"></i> Health API
+                </a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+                    <i data-lucide="moon" id="themeIcon"></i>
+                </button>
+                <div class="live-pill" id="livePill">
+                    <span class="pulse-dot"></span>
+                    <span class="live-text" id="liveStatusText">Online</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Automation Hub. Built with Flask 3 &amp; Modern Web Standards.</p>
+            <div class="footer-links">
+                <a href="/api/health" target="_blank" id="footerApi">API Status</a>
+                <a href="https://flask.palletsprojects.com/" target="_blank" rel="noreferrer" id="footerFlask">Flask Docs</a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

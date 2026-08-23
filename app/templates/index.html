@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-badge">
+        <i data-lucide="user-check"></i>
+        <span>Employee Management Dashboard</span>
+    </div>
+    <h1 class="hero-title">
+        Employee <span class="gradient-text">Registration Portal</span>
+    </h1>
+    <p class="hero-subtitle">
+        Enter employee details below. Submitting will print and log the payload directly to the browser console and Flask server terminal.
+    </p>
+</div>
+
+<div class="dashboard-grid">
+    <div class="card form-card">
+        <div class="card-header">
+            <div class="card-title-group">
+                <div class="card-icon-badge">
+                    <i data-lucide="user-plus"></i>
+                </div>
+                <div>
+                    <h2>Employee Details</h2>
+                    <p class="card-subtitle">Fill in the fields below to submit</p>
+                </div>
+            </div>
+            <button type="button" class="btn-sm btn-ghost" id="btnFillSample" title="Fill Sample Data">
+                <i data-lucide="wand-2"></i> Auto-fill
+            </button>
+        </div>
+
+        <form id="employeeForm" class="employee-form" autocomplete="off">
+            <div id="taskStatusBox" class="task-status-banner status-idle" style="display: none;" role="status">
+                <div class="task-status-icon" id="taskStatusIcon">
+                    <i data-lucide="info"></i>
+                </div>
+                <div class="task-status-body">
+                    <div class="task-status-header">
+                        <span class="task-status-badge" id="taskStatusBadge">Idle</span>
+                        <span class="task-status-time" id="taskStatusTime"></span>
+                    </div>
+                    <div class="task-status-text" id="taskStatusText">Ready to start automation.</div>
+                </div>
+                <button type="button" class="alert-close-btn" id="btnCloseStatusBox" aria-label="Close status message">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div id="credentialAlert" class="template-alert template-alert-error" style="display: none;" role="alert">
+                <div class="alert-icon">
+                    <i data-lucide="alert-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <strong class="alert-title">Authentication Error</strong>
+                    <p class="alert-message" id="credentialAlertMessage">Username or password is wrong</p>
+                </div>
+                <button type="button" class="alert-close-btn" id="btnCloseAlert" aria-label="Close error message">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="firstName" class="form-label">
+                        <i data-lucide="user"></i> First Name
+                    </label>
+                    <input 
+                        type="text" 
+                        id="firstName" 
+                        name="first_name" 
+                        class="form-control" 
+                        placeholder="e.g. Jane" 
+                        required
+                    >
+                </div>
+                <div class="form-field">
+                    <label for="lastName" class="form-label">
+                        <i data-lucide="user"></i> Last Name
+                    </label>
+                    <input 
+                        type="text" 
+                        id="lastName" 
+                        name="last_name" 
+                        class="form-control" 
+                        placeholder="e.g. Smith" 
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label for="employeeId" class="form-label">
+                    <i data-lucide="badge-check"></i> Employee ID
+                </label>
+                <input 
+                    type="text" 
+                    id="employeeId" 
+                    name="employee_id" 
+                    class="form-control" 
+                    placeholder="Enter a Number only" 
+                    required
+                >
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="orangeUsername" class="form-label">
+                        <i data-lucide="shield"></i> Enter Username <span style="color: var(--brand-red, #ef4444);">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="orangeUsername" 
+                        name="orange_username" 
+                        class="form-control" 
+                        required
+                    >
+                    <span class="field-error-msg" id="usernameErrorMsg" style="display: none; color: #ef4444; font-size: 0.8rem; margin-top: 0.35rem;">Username is required.</span>
+                </div>
+                <div class="form-field">
+                    <label for="orangePassword" class="form-label">
+                        <i data-lucide="key"></i> Enter Password <span style="color: var(--brand-red, #ef4444);">*</span>
+                    </label>
+                    <input 
+                        type="password" 
+                        id="orangePassword" 
+                        name="orange_password" 
+                        class="form-control" 
+                        required
+                    >
+                    <span class="field-error-msg" id="passwordErrorMsg" style="display: none; color: #ef4444; font-size: 0.8rem; margin-top: 0.35rem;">Password is required.</span>
+                </div>
+            </div>
+
+            <div class="form-field-checkbox" style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; padding: 0.6rem 0.85rem; background: var(--card-bg-subtle, rgba(255, 255, 255, 0.03)); border-radius: 8px; border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));">
+                <input type="checkbox" id="showBrowserToggle" name="show_browser" checked style="width: 18px; height: 18px; cursor: pointer; accent-color: #6366f1;">
+                <label for="showBrowserToggle" style="margin-bottom: 0; cursor: pointer; font-size: 0.875rem; display: flex; align-items: center; gap: 0.4rem; font-weight: 500;">
+                    <i data-lucide="monitor" style="width: 16px; height: 16px;"></i> Show Browser Window (Headed Mode)
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="btnRunAutomation" style="background: linear-gradient(135deg, #0ea5e9, #6366f1); border: none;">
+                    <i data-lucide="play-circle"></i>
+                    <span>Run Automation</span>
+                </button>
+                <button type="submit" class="btn btn-secondary btn-submit" id="btnSubmit">
+                    <i data-lucide="terminal"></i>
+                    <span>Log to Console Only</span>
+                </button>
+                <button type="reset" class="btn btn-ghost" id="btnReset">
+                    <i data-lucide="rotate-ccw"></i> Reset
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card console-card-box">
+        <div class="card-header">
+            <div class="card-title-group">
+                <div class="card-icon-badge icon-terminal">
+                    <i data-lucide="terminal"></i>
+                </div>
+                <div>
+                    <h2>Live Output Terminal</h2>
+                    <p class="card-subtitle">Real-time automation logs &amp; console mirror</p>
+                </div>
+            </div>
+            <button type="button" class="btn-sm btn-ghost" id="btnClearLogs" title="Clear Terminal Logs">
+                <i data-lucide="trash-2"></i> Clear
+            </button>
+        </div>
+
+        <div class="terminal-container">
+            <div class="terminal-topbar">
+                <div class="terminal-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                </div>
+                <span class="terminal-title">playwright-runner &bull; stdout</span>
+            </div>
+            <div class="terminal-body" id="terminalOutput">
+                <div class="terminal-line system-line">
+                    <span class="log-time">[Ready]</span> System initialized. Click <strong>Run Automation</strong> to trigger OrangeHRM workflow.
+                </div>
+                <div class="terminal-line placeholder-line">
+                    <span class="log-time">[Waiting]</span> Ready for automation trigger or employee submission...
+                </div>
+            </div>
+        </div>
+
+        <div class="console-hint">
+            <i data-lucide="info"></i>
+            <span>Executes Playwright flow: Login &rarr; PIM navigation &rarr; Add Employee &rarr; Extract data &rarr; Logout.</span>
+        </div>
+    </div>
+</div>
+
+<div class="section history-section" id="csvSection" style="margin-bottom: 2rem;">
+    <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h2 class="section-title"><i data-lucide="file-spreadsheet"></i> CSV Stored Records</h2>
+            <p class="section-desc">Employee records stored directly in the CSV file (<code>data/extracted_employees.csv</code>).</p>
+        </div>
+        <button type="button" class="btn-sm btn-ghost" id="btnRefreshCsv" title="Refresh CSV Data">
+            <i data-lucide="refresh-cw"></i> Refresh CSV
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="csvTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Employee ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="csvTableBody">
+                <tr id="emptyCsvRow">
+                    <td colspan="5" class="text-center text-muted">No CSV records found. Run the automation above to save records to CSV.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

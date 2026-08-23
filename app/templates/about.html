@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="about-container">
+    <div class="hero-badge">
+        <i data-lucide="book-marked"></i>
+        <span>Project Architecture</span>
+    </div>
+    <h1 class="hero-title">
+        Structure &amp; <span class="gradient-text">Documentation</span>
+    </h1>
+    <p class="hero-subtitle">
+        Everything you need to scale your automation workflows, add custom blueprints, and wire background tasks.
+    </p>
+
+    <div class="doc-cards-grid">
+        <div class="doc-card">
+            <div class="doc-card-icon"><i data-lucide="folder-tree"></i></div>
+            <h3>Project Organization</h3>
+            <ul class="doc-list">
+                <li><code>app/__init__.py</code> &mdash; Application Factory Pattern (<code>create_app()</code>)</li>
+                <li><code>app/routes/api.py</code> &mdash; REST API endpoints (<code>/api/*</code>)</li>
+                <li><code>app/routes/main.py</code> &mdash; View templates (<code>/</code>, <code>/about</code>)</li>
+                <li><code>config.py</code> &mdash; Environment-specific configuration</li>
+                <li><code>run.py</code> &mdash; Local development runner</li>
+            </ul>
+        </div>
+
+        <div class="doc-card">
+            <div class="doc-card-icon"><i data-lucide="terminal"></i></div>
+            <h3>Running the Server</h3>
+            <p>Activate your virtual environment and start the development server:</p>
+            <pre class="code-snippet"><code>.\venv\Scripts\Activate.ps1
+python run.py</code></pre>
+        </div>
+
+        <div class="doc-card">
+            <div class="doc-card-icon"><i data-lucide="plug"></i></div>
+            <h3>Adding New Blueprints</h3>
+            <p>Create a new file in <code>app/routes/</code> and register it inside <code>app/__init__.py</code>:</p>
+            <pre class="code-snippet"><code>from app.routes.my_route import my_bp
+app.register_blueprint(my_bp, url_prefix="/custom")</code></pre>
+        </div>
+    </div>
+</div>
+{% endblock %}
